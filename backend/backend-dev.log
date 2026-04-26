@@ -1,0 +1,40 @@
+
+> tiruppur-fabric-tracker-backend@0.1.0 start:dev
+> nest start --watch
+
+[2J[3J[H[[90m11:05:44 PM[0m] Starting compilation in watch mode...
+
+[[90m11:05:46 PM[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:48 PM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:48 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +20ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:48 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCalculationModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:48 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:48 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:48 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:48 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:48 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mWhatsappModule dependencies initialized[39m[38;5;3m +57ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:48 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mEmailModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:48 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +817ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mReportsModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOutwardModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mInwardModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +5ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOutwardController {/outward}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/outward, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/outward, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/outward/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mInwardController {/inward}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/inward, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/inward, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/inward/:id/send-email-alert, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mReportsController {/reports}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/reports, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 4236  - [39m04/24/2026, 11:05:49 PM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +3ms[39m
