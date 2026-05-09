@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { getSelectedStyle, getSession } from "@/lib/auth";
+import { canOpenWithoutSelectedStyle } from "@/lib/merchant-flow";
 import type { AuthSession } from "@/types";
 
 interface AuthGuardProps {
@@ -28,7 +29,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
       return;
     }
 
-    if (pathname !== "/style-select" && !getSelectedStyle()) {
+    if (!canOpenWithoutSelectedStyle(pathname) && !getSelectedStyle()) {
       router.replace("/style-select");
       return;
     }

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { BackButton } from "@/components/BackButton";
 import { FormInput } from "@/components/FormInput";
 import { getSession, saveSelectedStyle } from "@/lib/auth";
+import { getStyleLandingPath } from "@/lib/merchant-flow";
 
 const existingStyle = {
   id: "tiruppur-fabric-tracker",
@@ -37,7 +38,7 @@ export default function StyleSelectPage() {
       id: styleName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
       name: styleName
     });
-    router.replace("/");
+    router.replace(getStyleLandingPath(getSession()?.role, "new"));
   }
 
   const session = typeof window !== "undefined" ? getSession() : null;

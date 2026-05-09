@@ -2,7 +2,12 @@ export type ProcessType = "Dyeing" | "Printing" | "Compacting" | "Washing" | "Ot
 
 export type ReportStatus = "PENDING_RETURN" | "NORMAL" | "SHORTAGE_ALERT";
 
-export type UserRole = "OWNER" | "MERCHANT";
+export type UserRole =
+  | "OWNER"
+  | "MERCHANT"
+  | "SAMPLE_DEPARTMENT"
+  | "STITCHING_DEPARTMENT"
+  | "CUTTING_DEPARTMENT";
 
 export interface LoginPayload {
   role: UserRole;

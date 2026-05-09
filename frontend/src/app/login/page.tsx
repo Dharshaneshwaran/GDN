@@ -5,11 +5,15 @@ import { useRouter } from "next/navigation";
 import { FormInput } from "@/components/FormInput";
 import { api } from "@/lib/api";
 import { saveSession } from "@/lib/auth";
+import { getLoginLandingPath } from "@/lib/merchant-flow";
 import type { UserRole } from "@/types";
 
 const roles: { label: string; value: UserRole }[] = [
   { label: "Owner", value: "OWNER" },
-  { label: "Merchant", value: "MERCHANT" }
+  { label: "Merchant", value: "MERCHANT" },
+  { label: "Sample Department", value: "SAMPLE_DEPARTMENT" },
+  { label: "Stitching Department", value: "STITCHING_DEPARTMENT" },
+  { label: "Cutting Department", value: "CUTTING_DEPARTMENT" }
 ];
 
 export default function LoginPage() {
@@ -32,7 +36,7 @@ export default function LoginPage() {
         password: String(form.get("password"))
       });
       saveSession(session);
-      router.replace("/style-select");
+      router.replace(getLoginLandingPath(session.role));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
@@ -48,13 +52,13 @@ export default function LoginPage() {
         </p>
         <h1 className="mt-2 text-3xl font-bold text-factory-ink">Login</h1>
 
-        <div className="mt-5 grid grid-cols-2 gap-2">
+        <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
           {roles.map((item) => (
             <button
               key={item.value}
               type="button"
               onClick={() => setRole(item.value)}
-              className={`rounded-md px-4 py-3 font-bold ${
+              className={`min-h-12 rounded-md px-4 py-3 text-sm font-bold sm:text-base ${
                 role === item.value
                   ? "bg-factory-green text-white"
                   : "bg-factory-panel text-factory-ink"
@@ -80,13 +84,18 @@ export default function LoginPage() {
             disabled={submitting}
             className="w-full rounded-md bg-factory-green px-5 py-4 text-lg font-bold text-white disabled:opacity-60"
           >
-            {submitting ? "Logging in..." : `Login as ${role === "OWNER" ? "Owner" : "Merchant"}`}
+            {submitting
+              ? "Logging in..."
+              : `Login as ${roles.find((item) => item.value === role)?.label ?? "User"}`}
           </button>
         </form>
 
         <div className="mt-4 rounded-md bg-factory-panel p-3 text-sm text-slate-700">
           <p>Owner demo: owner / owner123</p>
           <p>Merchant demo: merchant / merchant123</p>
+          <p>Sample demo: sample / sample123</p>
+          <p>Stitching demo: stitching / stitching123</p>
+          <p>Cutting demo: cutting / cutting123</p>
         </div>
       </section>
     </div>
