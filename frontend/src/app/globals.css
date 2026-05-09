@@ -6,14 +6,36 @@
   color-scheme: light;
 }
 
-* {
-  box-sizing: border-box;
+@layer base {
+  body {
+    @apply selection:bg-factory-accent/30 selection:text-slate-900 antialiased bg-slate-50;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background: linear-gradient(135deg, #fdfdfd 0%, #f8fafc 100%);
+  }
 }
 
-body {
-  margin: 0;
-  background: #eef3f1;
-  color: #172026;
+/* Custom Professional Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full hover:bg-slate-300 transition-colors;
+}
+
+/* Hide scrollbar for elements with .scrollbar-hide */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 button,

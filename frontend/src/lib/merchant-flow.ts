@@ -8,9 +8,9 @@ export interface MerchantDepartment {
 }
 
 export const merchantDepartments: MerchantDepartment[] = [
-  { id: "yarn", label: "Yarn" },
+  { id: "yarn", label: "Yawn" },
   { id: "knitting", label: "Knitting" },
-  { id: "dyeing", label: "Dyeing" },
+  { id: "dyeing", label: "Dying" },
   { id: "washing", label: "Washing" },
   { id: "cutting", label: "Cutting" },
   { id: "stitching", label: "Stitching" },
@@ -26,7 +26,7 @@ export function getLoginLandingPath(role: UserRole): string {
 }
 
 export function canOpenWithoutSelectedStyle(pathname: string): boolean {
-  return pathname === "/style-select" || pathname === "/merchant";
+  return pathname === "/style-select" || pathname === "/merchant" || pathname === "/";
 }
 
 export function getStyleLandingPath(role: UserRole | undefined, mode: StyleSelectionMode): string {

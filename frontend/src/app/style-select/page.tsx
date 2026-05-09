@@ -8,8 +8,8 @@ import { getSession, saveSelectedStyle } from "@/lib/auth";
 import { getStyleLandingPath } from "@/lib/merchant-flow";
 
 const existingStyle = {
-  id: "tiruppur-fabric-tracker",
-  name: "Tiruppur Fabric Tracker"
+  id: "ruroxz-exports",
+  name: "Ruroxz Exports"
 };
 
 export default function StyleSelectPage() {

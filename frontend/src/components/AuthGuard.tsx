@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { getSelectedStyle, getSession } from "@/lib/auth";
-import { canOpenWithoutSelectedStyle } from "@/lib/merchant-flow";
+import { canOpenWithoutSelectedStyle, getLoginLandingPath } from "@/lib/merchant-flow";
 import type { AuthSession } from "@/types";
 
 interface AuthGuardProps {
@@ -30,7 +30,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
     }
 
     if (!canOpenWithoutSelectedStyle(pathname) && !getSelectedStyle()) {
-      router.replace("/style-select");
+      router.replace(getLoginLandingPath(currentSession.role));
       return;
     }
 
@@ -44,8 +44,11 @@ export function AuthGuard({ children }: AuthGuardProps) {
 
   if (checking || !session) {
     return (
-      <div className="mx-auto max-w-6xl px-4 py-8">
-        <div className="rounded-md bg-white p-4 text-factory-ink shadow-sm">Checking login...</div>
+      <div className="flex h-screen w-full items-center justify-center bg-slate-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-factory-green border-t-transparent"></div>
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Initializing Ruroxz Exports...</p>
+        </div>
       </div>
     );
   }

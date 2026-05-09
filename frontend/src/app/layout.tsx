@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import { AuthGuard } from "@/components/AuthGuard";
-import { Navbar } from "@/components/Navbar";
+import { Topbar } from "@/components/Topbar";
+import { Sidebar } from "@/components/Sidebar";
 import "./globals.css";
 
+const inter = Inter({ subsets: ["latin"] });
+
 export const metadata: Metadata = {
-  title: "Tiruppur Fabric Tracker",
-  description: "Fabric outward, inward and shortage tracking for garment factories"
+  title: "Ruroxz Exports",
+  description: "Elite fabric movement tracking for garment industries"
 };
 
 export default function RootLayout({
@@ -14,11 +18,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className={inter.className}>
+      <body className="flex h-screen flex-col bg-slate-50 antialiased overflow-hidden">
         <AuthGuard>
-          <Navbar />
-          <main className="mx-auto max-w-6xl px-4 py-6 sm:py-8">{children}</main>
+          <Topbar />
+          <div className="flex flex-1 overflow-hidden">
+            <Sidebar />
+            <main className="flex-1 overflow-y-auto p-6 lg:p-10 scrollbar-hide">
+              <div className="mx-auto max-w-[1600px]">
+                {children}
+              </div>
+            </main>
+          </div>
         </AuthGuard>
       </body>
     </html>
