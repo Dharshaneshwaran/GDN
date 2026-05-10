@@ -42,6 +42,7 @@ export default function MerchantPage() {
     if (style) {
       saveSelectedStyle(style);
       setSelectedStyle(style);
+      router.push(`/merchant/analysis/${style.id}/production-type`);
     } else {
       saveSelectedStyle(null as any);
       setSelectedStyle(null);
@@ -60,6 +61,7 @@ export default function MerchantPage() {
     setIsSubmitting(true);
     const form = new FormData(event.currentTarget);
     const styleName = String(form.get("styleName") ?? "").trim();
+    const description = String(form.get("description") ?? "").trim();
     if (!styleName) {
       setError("TITLE REQUIRED FOR SYSTEM INITIALIZATION");
       setIsSubmitting(false);
@@ -67,7 +69,7 @@ export default function MerchantPage() {
     }
     await new Promise((resolve) => setTimeout(resolve, 800));
     const generatedId = styleName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-    const newStyle = { id: generatedId, name: styleName };
+    const newStyle = { id: generatedId, name: styleName, description };
     saveSelectedStyle(newStyle);
     setSelectedStyle(newStyle);
     router.push(`/merchant/analysis/${generatedId}`);
@@ -109,7 +111,14 @@ export default function MerchantPage() {
             </h2>
             <p className="text-sm text-slate-500 font-bold uppercase tracking-widest max-w-sm mb-12">
                Engine synchronized with style record: <br/> 
-               <span className="text-slate-900 mt-2 block bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm">{selectedStyle.name}</span>
+               <span className="text-slate-900 mt-2 block bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm">
+                 {selectedStyle.name} 
+                 {selectedStyle.productionType && (
+                   <span className="ml-2 text-factory-emerald border-l border-slate-100 pl-2">
+                     {selectedStyle.productionType.toUpperCase()}
+                   </span>
+                 )}
+               </span>
             </p>
             <button
               onClick={() => openStyle(null)}

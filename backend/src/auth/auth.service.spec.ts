@@ -25,7 +25,7 @@ describe("AuthService", () => {
       {
         role: "SAMPLE_DEPARTMENT",
         username: "sample",
-        displayName: "Sample Department"
+        displayName: "Sample Development"
       }
     );
     assert.deepEqual(

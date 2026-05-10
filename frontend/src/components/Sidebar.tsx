@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { merchantDepartments } from "@/lib/merchant-flow";
 import { 
   ChevronRight, 
@@ -12,7 +12,8 @@ import {
   Fingerprint,
   Box,
   LayoutGrid,
-  Shield
+  Shield,
+  Sparkles
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { getSelectedStyle, getSession, type SelectedStyle } from "@/lib/auth";
@@ -20,6 +21,7 @@ import type { AuthSession } from "@/types";
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [style, setStyle] = useState<SelectedStyle | null>(null);
   const [session, setSession] = useState<AuthSession | null>(null);
   const [activeStageId, setActiveStageId] = useState(merchantDepartments[0].id);
@@ -81,11 +83,31 @@ export function Sidebar() {
         </div>
         
         {style ? (
-          <div className="bg-slate-50 p-2.5 rounded-lg flex items-center gap-3 border border-slate-200/60 group hover:border-factory-accent transition-colors">
-            <div className="p-1.5 bg-slate-900 rounded-md shrink-0">
-              <Layers size={12} className="text-factory-accent" />
+          <div className="space-y-3">
+            <div className="bg-slate-50 p-2.5 rounded-lg flex items-center gap-3 border border-slate-200/60 group hover:border-factory-accent transition-colors">
+              <div className="p-1.5 bg-slate-900 rounded-md shrink-0">
+                <Layers size={12} className="text-factory-accent" />
+              </div>
+              <span className="text-[10px] font-black text-slate-800 tracking-tight truncate uppercase">{style.name}</span>
             </div>
-            <span className="text-[10px] font-black text-slate-800 tracking-tight truncate uppercase">{style.name}</span>
+            
+            <button
+              onClick={() => {
+                setActiveStageId("sample");
+                router.push("/sample");
+              }}
+              className={`flex w-full items-center justify-between rounded-lg px-4 py-3 text-[9px] font-black uppercase tracking-widest transition-all duration-200 group ${
+                activeStageId === "sample"
+                  ? "bg-slate-900 text-white shadow-premium-md"
+                  : "bg-white border border-slate-100 text-slate-400 hover:text-slate-900 hover:bg-slate-50 shadow-premium-sm"
+              }`}
+            >
+              <span className="flex items-center gap-3">
+                <Sparkles size={12} className={activeStageId === "sample" ? "text-factory-accent" : "text-slate-300 group-hover:text-slate-900"} />
+                <span>Sample Development</span>
+              </span>
+              <ChevronRight size={10} className={activeStageId === "sample" ? "text-factory-emerald" : "text-slate-200"} />
+            </button>
           </div>
         ) : (
           <Link href="/merchant" className="p-2.5 rounded-lg bg-slate-50 border border-dashed border-slate-200 flex flex-col items-center text-center hover:bg-white hover:border-factory-accent transition-all">
@@ -102,13 +124,20 @@ export function Sidebar() {
         </div>
         
         <div className="flex-1 overflow-y-auto p-2 space-y-0.5 scrollbar-hide">
-          {merchantDepartments.map((department) => {
+          {merchantDepartments.filter(d => d.id !== 'sample').map((department) => {
             const active = department.id === activeStageId;
             return (
               <button
                 key={department.id}
                 type="button"
-                onClick={() => setActiveStageId(department.id)}
+                onClick={() => {
+                  setActiveStageId(department.id);
+                  if (department.id === "sample") {
+                    router.push("/sample");
+                  } else {
+                    router.push(`/${department.id}`);
+                  }
+                }}
                 className={`flex w-full items-center justify-between rounded-lg px-4 py-2.5 text-[9px] font-black uppercase tracking-widest transition-all duration-200 group ${
                   active
                     ? "bg-slate-900 text-white shadow-premium-md"

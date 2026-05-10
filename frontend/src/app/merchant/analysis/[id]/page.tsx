@@ -58,7 +58,7 @@ SECTION_03: ASSEMBLY_LOGIC
 
   function handleConfirm() {
     saveSelectedStyle({ id: styleId, name: styleName });
-    router.push("/merchant");
+    router.push(`/merchant/analysis/${styleId}/production-type`);
   }
 
   if (extractionState !== "complete") {

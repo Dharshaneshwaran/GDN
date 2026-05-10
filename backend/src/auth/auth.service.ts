@@ -32,7 +32,7 @@ const LOGIN_CONFIG: Record<UserRole, LoginConfig> = {
     defaultPassword: "merchant123"
   },
   SAMPLE_DEPARTMENT: {
-    displayName: "Sample Department",
+    displayName: "Sample Development",
     usernameEnvKey: "SAMPLE_DEPARTMENT_LOGIN_USERNAME",
     defaultUsername: "sample",
     passwordEnvKey: "SAMPLE_DEPARTMENT_LOGIN_PASSWORD",

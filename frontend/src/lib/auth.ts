@@ -7,6 +7,47 @@ const STYLES_LIST_KEY = "fabric_tracker_styles_list";
 export interface SelectedStyle {
   id: string;
   name: string;
+  description?: string;
+  productionType?: "sample" | "bulk";
+}
+
+export interface AppNotification {
+  id: string;
+  title: string;
+  message: string;
+  timestamp: string;
+  read: boolean;
+  type: "style_transfer" | "system";
+  payload?: any;
+}
+
+const NOTIFICATIONS_KEY = "fabric_tracker_notifications";
+
+export function getNotifications(): AppNotification[] {
+  if (typeof window === "undefined") return [];
+  const raw = window.localStorage.getItem(NOTIFICATIONS_KEY);
+  return raw ? JSON.parse(raw) : [];
+}
+
+export function addNotification(notification: Omit<AppNotification, "id" | "timestamp" | "read">): void {
+  if (typeof window === "undefined") return;
+  const notifications = getNotifications();
+  const newNotif: AppNotification = {
+    ...notification,
+    id: Math.random().toString(36).substring(7),
+    timestamp: new Date().toISOString(),
+    read: false
+  };
+  window.localStorage.setItem(NOTIFICATIONS_KEY, JSON.stringify([newNotif, ...notifications]));
+  window.dispatchEvent(new Event("notifications-changed"));
+}
+
+export function markNotificationAsRead(id: string): void {
+  if (typeof window === "undefined") return;
+  const notifications = getNotifications();
+  const updated = notifications.map(n => n.id === id ? { ...n, read: true } : n);
+  window.localStorage.setItem(NOTIFICATIONS_KEY, JSON.stringify(updated));
+  window.dispatchEvent(new Event("notifications-changed"));
 }
 
 const DEFAULT_STYLES: SelectedStyle[] = [
@@ -90,5 +131,22 @@ export function getSelectedStyle(): SelectedStyle | null {
   } catch {
     window.localStorage.removeItem(STYLE_SESSION_KEY);
     return null;
+  }
+}
+
+const EXISTING_SAMPLES_KEY = "fabric_tracker_existing_samples";
+
+export function getExistingSamples(): SelectedStyle[] {
+  if (typeof window === "undefined") return [];
+  const raw = window.localStorage.getItem(EXISTING_SAMPLES_KEY);
+  return raw ? JSON.parse(raw) : [];
+}
+
+export function addExistingSample(sample: SelectedStyle): void {
+  if (typeof window === "undefined") return;
+  const samples = getExistingSamples();
+  if (!samples.find(s => s.id === sample.id)) {
+    const updated = [sample, ...samples];
+    window.localStorage.setItem(EXISTING_SAMPLES_KEY, JSON.stringify(updated));
   }
 }

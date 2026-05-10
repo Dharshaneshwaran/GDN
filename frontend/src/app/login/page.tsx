@@ -12,7 +12,7 @@ import { ShieldCheck, ArrowRight } from "lucide-react";
 const roles: { label: string; value: UserRole }[] = [
   { label: "Owner", value: "OWNER" },
   { label: "Merchant", value: "MERCHANT" },
-  { label: "Sample Dept", value: "SAMPLE_DEPARTMENT" },
+  { label: "Sample Development", value: "SAMPLE_DEPARTMENT" },
   { label: "Stitching", value: "STITCHING_DEPARTMENT" },
   { label: "Cutting", value: "CUTTING_DEPARTMENT" }
 ];
