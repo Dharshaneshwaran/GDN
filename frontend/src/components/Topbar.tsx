@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { clearSession, getSelectedStyle, getSession, getNotifications, markNotificationAsRead, type SelectedStyle, type AppNotification } from "@/lib/auth";
+import { clearSession, getSelectedStyle, getSession, getNotifications, markNotificationAsRead, clearNotifications, type SelectedStyle, type AppNotification } from "@/lib/auth";
 import type { AuthSession } from "@/types";
 import { 
   LayoutDashboard, 
@@ -17,7 +17,8 @@ import {
   ChevronDown,
   Clock,
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  Trash2
 } from "lucide-react";
 
 export function Topbar() {
@@ -36,10 +37,17 @@ export function Topbar() {
         setNotifications([]);
         return;
       }
-      setSession(getSession());
+      const currentSession = getSession();
+      setSession(currentSession);
       setStyle(getSelectedStyle());
-      // Filter out style_transfer notifications from Topbar - they only show on Sample Dev page
-      setNotifications(getNotifications().filter(n => n.type !== "style_transfer"));
+      
+      const allNotifications = getNotifications();
+      // Show style_transfer notifications only for Sample Dev role
+      const filtered = currentSession?.role === "SAMPLE_DEPARTMENT" 
+        ? allNotifications 
+        : allNotifications.filter(n => n.type !== "style_transfer");
+        
+      setNotifications(filtered);
     };
     updateState();
     window.addEventListener("style-changed", updateState);
@@ -160,8 +168,20 @@ export function Topbar() {
 
           {showNotifications && (
             <div className="absolute top-full mt-4 right-0 w-80 bg-white rounded-2xl shadow-premium-xl border border-slate-100 overflow-hidden animate-in fade-in slide-in-from-top-2">
-              <div className="p-4 border-b border-slate-50 bg-slate-50/50">
+              <div className="p-4 border-b border-slate-50 bg-slate-50/50 flex items-center justify-between">
                 <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-900">Communication Terminal</h3>
+                {notifications.length > 0 && (
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      clearNotifications();
+                    }}
+                    className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest text-red-500 hover:text-red-600 transition-colors"
+                  >
+                    <Trash2 size={12} />
+                    Clear All
+                  </button>
+                )}
               </div>
               <div className="max-h-[400px] overflow-y-auto">
                 {notifications.length === 0 ? (
@@ -172,7 +192,13 @@ export function Topbar() {
                   notifications.map((n) => (
                     <div 
                       key={n.id} 
-                      onClick={() => markNotificationAsRead(n.id)}
+                      onClick={() => {
+                        markNotificationAsRead(n.id);
+                        if (n.type === "style_transfer") {
+                          router.push("/sample");
+                          setShowNotifications(false);
+                        }
+                      }}
                       className={`p-4 border-b border-slate-50 cursor-pointer transition-colors hover:bg-slate-50 relative group ${!n.read ? "bg-emerald-50/30" : ""}`}
                     >
                       <div className="flex gap-3">

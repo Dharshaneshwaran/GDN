@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { getSelectedStyle, saveSelectedStyle } from "@/lib/auth";
+import { getSelectedStyle, saveSelectedStyle, addNotification, getSession } from "@/lib/auth";
 import { BackButton } from "@/components/BackButton";
 import { Layers, ChevronRight, Sparkles, Zap, Cpu, ShieldCheck } from "lucide-react";
 
@@ -21,10 +21,19 @@ export default function ProductionTypePage() {
   function handleSelect(type: "sample" | "bulk") {
     const currentStyle = selectedStyle || { id: styleId, name: styleId.split("-").map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") };
     saveSelectedStyle({ ...currentStyle, productionType: type });
+    
     if (type === "sample") {
+      // Add notification for sample development
+      const session = getSession();
+      addNotification({
+        title: `Style Assignment: ${currentStyle.name}`,
+        message: `Merchant ${session?.displayName || "System"} has transmitted style ${currentStyle.name} for prototyping.`,
+        type: "style_transfer",
+        payload: { styleId: currentStyle.id, styleName: currentStyle.name }
+      });
       router.push("/sample");
     } else {
-      router.push("/merchant");
+      router.push("/merchant/bulk");
     }
   }
 

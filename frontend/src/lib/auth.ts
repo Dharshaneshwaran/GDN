@@ -50,6 +50,12 @@ export function markNotificationAsRead(id: string): void {
   window.dispatchEvent(new Event("notifications-changed"));
 }
 
+export function clearNotifications(): void {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(NOTIFICATIONS_KEY, JSON.stringify([]));
+  window.dispatchEvent(new Event("notifications-changed"));
+}
+
 const DEFAULT_STYLES: SelectedStyle[] = [
   { id: "summer-po-102", name: "Summer PO 102" },
   { id: "winter-collection-26", name: "Winter Collection 2026" },
