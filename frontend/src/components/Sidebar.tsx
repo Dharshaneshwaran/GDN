@@ -35,6 +35,18 @@ export function Sidebar() {
       }
       setStyle(getSelectedStyle());
       setSession(getSession());
+      
+      // Sync activeStageId with pathname
+      if (pathname === "/sample") {
+        setActiveStageId("sample");
+      } else if (pathname === "/merchant") {
+        setActiveStageId("merchant");
+      } else if (pathname.startsWith("/merchant/bulk")) {
+        setActiveStageId("bulk");
+      } else {
+        const dept = merchantDepartments.find(d => pathname.startsWith(`/${d.id}`));
+        if (dept) setActiveStageId(dept.id);
+      }
     };
     updateState();
     window.addEventListener("style-changed", updateState);
@@ -63,13 +75,16 @@ export function Sidebar() {
             <h2 className="text-[11px] font-black tracking-widest text-slate-900 uppercase truncate w-full z-10">{session.displayName}</h2>
             <p className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-0.5 z-10">Elite Merchant</p>
             
-            <Link 
-              href="/merchant" 
+            <button 
+              onClick={() => {
+                setActiveStageId("merchant");
+                router.push("/merchant");
+              }}
               className="mt-5 w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white border border-slate-200/60 text-[9px] font-bold uppercase tracking-widest text-slate-500 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all shadow-premium-sm"
             >
               <Settings size={10} />
               Style Console
-            </Link>
+            </button>
           </>
         )}
         <div className="absolute top-[-10%] right-[-10%] w-24 h-24 bg-white/50 rounded-full blur-2xl z-0" />
@@ -83,13 +98,29 @@ export function Sidebar() {
         </div>
         
         {style ? (
-          <div className="space-y-3">
-            <div className="bg-slate-50 p-2.5 rounded-lg flex items-center gap-3 border border-slate-200/60 group hover:border-factory-accent transition-colors">
-              <div className="p-1.5 bg-slate-900 rounded-md shrink-0">
+          <div className="space-y-2.5">
+            <button
+              onClick={() => {
+                setActiveStageId("merchant");
+                router.push("/merchant");
+              }}
+              className={`w-full p-2.5 rounded-lg flex items-center gap-3 border transition-all duration-200 group ${
+                activeStageId === "merchant"
+                  ? "bg-slate-900 border-slate-900 shadow-premium-md"
+                  : "bg-slate-50 border-slate-200/60 hover:border-factory-accent"
+              }`}
+            >
+              <div className={`p-1.5 rounded-md shrink-0 transition-colors ${
+                activeStageId === "merchant" ? "bg-slate-800" : "bg-slate-900"
+              }`}>
                 <Layers size={12} className="text-factory-accent" />
               </div>
-              <span className="text-[10px] font-black text-slate-800 tracking-tight truncate uppercase">{style.name}</span>
-            </div>
+              <span className={`text-[10px] font-black tracking-tight truncate uppercase transition-colors ${
+                activeStageId === "merchant" ? "text-white" : "text-slate-800"
+              }`}>
+                {style.name}
+              </span>
+            </button>
             
             <button
               onClick={() => {
@@ -107,6 +138,24 @@ export function Sidebar() {
                 <span>Sample Development</span>
               </span>
               <ChevronRight size={10} className={activeStageId === "sample" ? "text-factory-emerald" : "text-slate-200"} />
+            </button>
+
+            <button
+              onClick={() => {
+                setActiveStageId("bulk");
+                router.push("/merchant/bulk");
+              }}
+              className={`flex w-full items-center justify-between rounded-lg px-4 py-3 text-[9px] font-black uppercase tracking-widest transition-all duration-200 group ${
+                activeStageId === "bulk"
+                  ? "bg-slate-900 text-white shadow-premium-md"
+                  : "bg-white border border-slate-100 text-slate-400 hover:text-slate-900 hover:bg-slate-50 shadow-premium-sm"
+              }`}
+            >
+              <span className="flex items-center gap-3">
+                <Box size={12} className={activeStageId === "bulk" ? "text-factory-accent" : "text-slate-300 group-hover:text-slate-900"} />
+                <span>Bulk Production</span>
+              </span>
+              <ChevronRight size={10} className={activeStageId === "bulk" ? "text-factory-emerald" : "text-slate-200"} />
             </button>
           </div>
         ) : (

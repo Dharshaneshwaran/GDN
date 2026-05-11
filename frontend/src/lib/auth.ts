@@ -156,3 +156,36 @@ export function addExistingSample(sample: SelectedStyle): void {
     window.localStorage.setItem(EXISTING_SAMPLES_KEY, JSON.stringify(updated));
   }
 }
+
+const WORKFLOWS_KEY = "fabric_tracker_workflows";
+
+export interface ProductionWorkflow {
+  id: string;
+  styleId: string;
+  styleName: string;
+  steps: string[];
+  timestamp: string;
+}
+
+export function saveWorkflow(workflow: Omit<ProductionWorkflow, "id" | "timestamp">): void {
+  if (typeof window === "undefined") return;
+  const workflows = getWorkflows();
+  const newWorkflow: ProductionWorkflow = {
+    ...workflow,
+    id: Math.random().toString(36).substring(7),
+    timestamp: new Date().toISOString()
+  };
+  window.localStorage.setItem(WORKFLOWS_KEY, JSON.stringify([newWorkflow, ...workflows]));
+}
+
+export function getWorkflows(): ProductionWorkflow[] {
+  if (typeof window === "undefined") return [];
+  const raw = window.localStorage.getItem(WORKFLOWS_KEY);
+  return raw ? JSON.parse(raw) : [];
+}
+
+export function clearWorkflows(): void {
+  if (typeof window === "undefined") return;
+  window.localStorage.removeItem(WORKFLOWS_KEY);
+  window.dispatchEvent(new Event("workflows-changed"));
+}
