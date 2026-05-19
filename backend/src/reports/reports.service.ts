@@ -29,9 +29,8 @@ export class ReportsService {
       order: { createdAt: "DESC" }
     });
 
-    return outwardEntries.map((outwardEntry) => {
-      const inwardEntry = this.getLatestInwardEntry(outwardEntry.inwardEntries);
-      const { inwardEntries: _inwardEntries, ...outwardReportEntry } = outwardEntry;
+    return outwardEntries.map(({ inwardEntries, ...outwardReportEntry }) => {
+      const inwardEntry = this.getLatestInwardEntry(inwardEntries);
 
       if (!inwardEntry) {
         return {

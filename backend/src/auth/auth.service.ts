@@ -8,13 +8,59 @@ export interface LoginResponse {
   displayName: string;
 }
 
+interface LoginConfig {
+  displayName: string;
+  usernameEnvKey: string;
+  defaultUsername: string;
+  passwordEnvKey: string;
+  defaultPassword: string;
+}
+
+const LOGIN_CONFIG: Record<UserRole, LoginConfig> = {
+  OWNER: {
+    displayName: "Owner",
+    usernameEnvKey: "OWNER_LOGIN_USERNAME",
+    defaultUsername: "owner",
+    passwordEnvKey: "OWNER_LOGIN_PASSWORD",
+    defaultPassword: "owner123"
+  },
+  MERCHANT: {
+    displayName: "Merchant",
+    usernameEnvKey: "MERCHANT_LOGIN_USERNAME",
+    defaultUsername: "merchant",
+    passwordEnvKey: "MERCHANT_LOGIN_PASSWORD",
+    defaultPassword: "merchant123"
+  },
+  SAMPLE_DEPARTMENT: {
+    displayName: "Sample Development",
+    usernameEnvKey: "SAMPLE_DEPARTMENT_LOGIN_USERNAME",
+    defaultUsername: "sample",
+    passwordEnvKey: "SAMPLE_DEPARTMENT_LOGIN_PASSWORD",
+    defaultPassword: "sample123"
+  },
+  STITCHING_DEPARTMENT: {
+    displayName: "Stitching Department",
+    usernameEnvKey: "STITCHING_DEPARTMENT_LOGIN_USERNAME",
+    defaultUsername: "stitching",
+    passwordEnvKey: "STITCHING_DEPARTMENT_LOGIN_PASSWORD",
+    defaultPassword: "stitching123"
+  },
+  CUTTING_DEPARTMENT: {
+    displayName: "Cutting Department",
+    usernameEnvKey: "CUTTING_DEPARTMENT_LOGIN_USERNAME",
+    defaultUsername: "cutting",
+    passwordEnvKey: "CUTTING_DEPARTMENT_LOGIN_PASSWORD",
+    defaultPassword: "cutting123"
+  }
+};
+
 @Injectable()
 export class AuthService {
   constructor(private readonly configService: ConfigService) {}
 
   login(loginDto: LoginDto): LoginResponse {
     const username = loginDto.username.trim();
-    const expected = this.getCredentials(loginDto.role);
+    const expected = this.getLoginConfig(loginDto.role);
 
     if (username !== expected.username || loginDto.password !== expected.password) {
       throw new UnauthorizedException("Invalid username or password");
@@ -23,21 +69,19 @@ export class AuthService {
     return {
       role: loginDto.role,
       username,
-      displayName: loginDto.role === "OWNER" ? "Owner" : "Merchant"
+      displayName: expected.displayName
     };
   }
 
-  private getCredentials(role: UserRole): { username: string; password: string } {
-    if (role === "OWNER") {
-      return {
-        username: this.configService.get<string>("OWNER_LOGIN_USERNAME", "owner"),
-        password: this.configService.get<string>("OWNER_LOGIN_PASSWORD", "owner123")
-      };
-    }
+  private getLoginConfig(
+    role: UserRole
+  ): { username: string; password: string; displayName: string } {
+    const config = LOGIN_CONFIG[role];
 
     return {
-      username: this.configService.get<string>("MERCHANT_LOGIN_USERNAME", "merchant"),
-      password: this.configService.get<string>("MERCHANT_LOGIN_PASSWORD", "merchant123")
+      displayName: config.displayName,
+      username: this.configService.get<string>(config.usernameEnvKey, config.defaultUsername),
+      password: this.configService.get<string>(config.passwordEnvKey, config.defaultPassword)
     };
   }
 }
